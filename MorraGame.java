@@ -27,8 +27,18 @@ public class MorraGame {
 	public void chooseTeam() {
 		int team = 2;
 		while(team != 0 && team != 1) {
-			System.out.println("Please choose your team. (0 for evens, 1 for odds)");
-			team = sc.nextInt();
+			boolean iError = true; //input error
+			while(iError) {
+				System.out.println("Please choose your team. (0 for evens, 1 for odds)");
+				if(sc.hasNextInt()) {
+					team = sc.nextInt();
+					iError = false;
+				} else {
+					System.out.println("Please enter a NUMBER (either 0 or 1)");
+					sc.reset();
+					sc.next();
+				}
+			}
 		}
 		setPlayerTeam(team);
 		String chosenTeam = (team==0)?"evens":"odds";
