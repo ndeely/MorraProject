@@ -34,7 +34,7 @@ public class MorraGame {
 					team = sc.nextInt();
 					iError = false;
 				} else {
-					System.out.println("Please enter a NUMBER (either 0 or 1)");
+					System.out.println("Invalid choice");
 					sc.reset();
 					sc.next();
 				}
@@ -55,7 +55,7 @@ public class MorraGame {
 				playerMove = sc.nextInt();
 				iError = false;
 			} else {
-				System.out.println("Please enter a NUMBER (either 1 - 10)");
+				System.out.println("Invalid Move");
 				sc.reset();
 				sc.next();
 			}
