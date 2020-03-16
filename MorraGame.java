@@ -50,7 +50,15 @@ public class MorraGame {
 		int playerMove = 11;
 		while(playerMove < 1 || playerMove > 10) {
 			System.out.println("Please enter your move (1 - 10)");
-			playerMove = sc.nextInt();
+			boolean iError = true;
+			if(sc.hasNextInt()) {
+				playerMove = sc.nextInt();
+				iError = false;
+			} else {
+				System.out.println("Please enter a NUMBER (either 1 - 10)");
+				sc.reset();
+				sc.next();
+			}
 		}
 		System.out.println("You chose: " + playerMove);
 		int compMove = (int)(Math.random() * 10 + 1);
