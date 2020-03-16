@@ -15,7 +15,7 @@ public class MorraGame {
 		chooseTeam();
 		int count = 1;
 		while(playerScore < 12 && compScore < 12) {
-			System.out.println("\n\n--- ROUND " + count + " ---");
+			System.out.println("\n\n=== ROUND " + count + " ===");
 			playRound();
 			count++;
 		}
