@@ -6,7 +6,7 @@ public class MorraGameManager {
 	static int gameCount = 0;
 
 	//array for storing the game objects
-	MorraGame[] games = new MorraGame[100];
+	MorraGame[] games = new MorraGame[10];
 
 	public MorraGameManager() {
 		while(!play.equals("n")) {
@@ -31,6 +31,7 @@ public class MorraGameManager {
 	}
 
 	public void playGame() {
+		//auto prints game summary after 10 games
 		if (this.gameCount >= games.length) {
 			System.out.println("You have played " + this.gameCount + " games. Maybe you should go outside and get some fresh air?");
 			printGamesSummary();
