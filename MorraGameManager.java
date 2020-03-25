@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class MorraGameManager {
 	Scanner sc = new Scanner(System.in);
-	String play = "";
+	private String play = "";
 	static int gameCount = 0;
 
 	//array for storing the game objects
