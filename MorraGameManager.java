@@ -35,10 +35,10 @@ public class MorraGameManager {
 		if (this.gameCount >= games.length) {
 			System.out.println("\n\nYou have played " + this.gameCount + " games. Maybe you should go outside and get some fresh air?\n\n");
 			//increase size of games array by 10
-			MorraGame[] games2 = new MorraGame[games.length + 10];
-			for(int count = 0; count < gameCount; count++) {
-				games2[count] = games[count];
-				games = games2;
+			MorraGame[] games2 = new MorraGame[this.games.length + 10];
+			for(int count = 0; count < this.gameCount; count++) {
+				games2[count] = this.games[count];
+				this.games = games2;
 			}
 		} else {
 			MorraGame game = new MorraGame();
