@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class MorraGame {
 	Scanner sc = new Scanner(System.in);
@@ -7,9 +6,10 @@ public class MorraGame {
 	private int playerScore = 0, compScore = 0; //total points
 	private int roundWin = 0;
 	private int playerBonus = 0, compBonus = 0; //bonus points
-	private ArrayList<Integer> playerMoves = new ArrayList<Integer>();
-	private ArrayList<Integer> compMoves = new ArrayList<Integer>();
+	private int[] playerMoves = new int[7];
+	private int[] compMoves = new int[7];
 	private String winner = "";
+	private int moveCount = 0;
 
 	public MorraGame() {
 		chooseTeam();
@@ -19,7 +19,13 @@ public class MorraGame {
 			playRound();
 			count++;
 		}
-		this.winner = (playerScore>compScore)?"You won the game!":(playerScore==compScore)?"It's a draw!":"The computer won the game!";
+		if(playerScore > compScore) {
+			this.winner = "You won the game!";
+		} else if (playerScore == compScore) {
+			this.winner = "It's a draw!";
+		} else {
+			this.winner = "The computer won the game!";
+		}
 		System.out.println(this.gameEnd());
 	}
 
@@ -41,7 +47,12 @@ public class MorraGame {
 			}
 		}
 		setPlayerTeam(team);
-		String chosenTeam = (team==0)?"evens":"odds";
+		String chosenTeam = "";
+		if (team == 0) {
+			chosenTeam += "evens";
+		} else {
+			chosenTeam += "odds";
+		}
 		System.out.println("You have chosen to play as " + chosenTeam + "!");
 	}
 
@@ -63,8 +74,9 @@ public class MorraGame {
 		System.out.println("You chose: " + playerMove);
 		int compMove = (int)(Math.random() * 10 + 1);
 		System.out.println("Computer chose: " + compMove);
-		this.playerMoves.add(playerMove);
-		this.compMoves.add(compMove);
+		this.playerMoves[this.moveCount] = playerMove;
+		this.compMoves[this.moveCount] = compMove;
+		moveCount++;
 		calcScore(playerMove, compMove);
 	}
 
@@ -112,8 +124,8 @@ public class MorraGame {
 			String moveSummary = "\n\n" + this.winner;
 			moveSummary += "\nMoves";
 			moveSummary += "\nPlayer - Computer";
-			for(int moveCount = 0; moveCount < playerMoves.size(); moveCount++) {
-				moveSummary += "\n  " + playerMoves.get(moveCount) + "    -    " + compMoves.get(moveCount);
+			for(int count = 0; count < this.moveCount; count++) {
+				moveSummary += "\n  " + playerMoves[count] + "    -    " + compMoves[count];
 			}
 			return moveSummary;
 	}
@@ -123,20 +135,37 @@ public class MorraGame {
 	//bonus points received by both
 	public String toString() {
 		int playerEvenCount = 0, compEvenCount = 0;
-		for(int i = 0; i < this.playerMoves.size(); i++) {
-			if(this.playerMoves.get(i)%2 == 0) {playerEvenCount++;}
-			if(this.compMoves.get(i)%2 == 0) {compEvenCount++;}
+		for (int count = 0; count < this.moveCount; count++) {
+			if(this.playerMoves[count]%2 == 0) {playerEvenCount++;}
+			if(this.compMoves[count]%2 == 0) {compEvenCount++;}
 		}
 
 		String gameString = this.winner;
 		gameString += "\nRounds Won: " + this.roundWin;
-		gameString += "\nRounds Lost: " + (this.playerMoves.size() - this.roundWin);
-		String grammar1 = (playerEvenCount == 1)?"number":"numbers";
-		String grammar2 = ((this.playerMoves.size() - playerEvenCount) == 1)?"number":"numbers";
-		gameString += "\nYou chose " + playerEvenCount + " even " + grammar1 + ", and " + (this.playerMoves.size() - playerEvenCount) + " odd " + grammar2 + ".";
-		grammar1 = (compEvenCount == 1)?"number":"numbers";
-		grammar2 = ((this.playerMoves.size() - compEvenCount) == 1)?"number":"numbers";
-		gameString += "\nThe computer chose " + compEvenCount + " even " + grammar1 + ", and " + (this.playerMoves.size() - compEvenCount) + " odd " + grammar2 + ".";
+		gameString += "\nRounds Lost: " + (this.moveCount - this.roundWin);
+		String grammar1 = "", grammar2 = "";
+		if (playerEvenCount == 1) {
+			grammar1 = "number";
+		} else {
+			grammar1 = "numbers";
+		}
+		if (this.moveCount - playerEvenCount == 1) {
+			grammar2 = "number";
+		} else {
+			grammar2 = "numbers";
+		}
+		gameString += "\nYou chose " + playerEvenCount + " even " + grammar1 + ", and " + (this.moveCount - playerEvenCount) + " odd " + grammar2 + ".";
+		if (compEvenCount == 1) {
+			grammar1 = "number";
+		} else {
+			grammar1 = "numbers";
+		}
+		if (this.moveCount - compEvenCount == 1) {
+			grammar2 = "number";
+		} else {
+			grammar2 = "numbers";
+		}
+		gameString += "\nThe computer chose " + compEvenCount + " even " + grammar1 + ", and " + (this.moveCount - compEvenCount) + " odd " + grammar2 + ".";
 		gameString += "\nYou received " + this.playerBonus + " bonus points, and the computer received " + this.compBonus + " bonus points.";
 		return gameString;
 	}
