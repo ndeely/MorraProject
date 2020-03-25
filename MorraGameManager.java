@@ -31,11 +31,15 @@ public class MorraGameManager {
 	}
 
 	public void playGame() {
-		//auto prints game summary after 10 games
+		//checks players mental health after 10 games
 		if (this.gameCount >= games.length) {
-			printGamesSummary();
-			this.gameCount = 0;
 			System.out.println("\n\nYou have played " + this.gameCount + " games. Maybe you should go outside and get some fresh air?\n\n");
+			//increase size of games array by 10
+			MorraGame[] games2 = new MorraGame[games.length + 10];
+			for(int count = 0; count < gameCount; count++) {
+				games2[count] = games[count];
+				games = games2;
+			}
 		} else {
 			MorraGame game = new MorraGame();
 			this.games[this.gameCount] = game;
