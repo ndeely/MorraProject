@@ -33,10 +33,9 @@ public class MorraGameManager {
 	public void playGame() {
 		//auto prints game summary after 10 games
 		if (this.gameCount >= games.length) {
-			System.out.println("You have played " + this.gameCount + " games. Maybe you should go outside and get some fresh air?");
 			printGamesSummary();
 			this.gameCount = 0;
-			new MorraGameManager();
+			System.out.println("\n\nYou have played " + this.gameCount + " games. Maybe you should go outside and get some fresh air?\n\n");
 		} else {
 			MorraGame game = new MorraGame();
 			this.games[this.gameCount] = game;
