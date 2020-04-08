@@ -1,16 +1,30 @@
-import java.util.Scanner;
+
+/**
+ *
+ * @author Nail Deely, Tudor George Pascu, Alexander Zucher
+ * PBL for Software development, Mora Game
+ email Nail: x19216025@student.ncirl.ie
+ email Tudor: x19209690@student.ncirl.ie
+ email Alex: x19224338@student.ncirl.ie
+ * 
+ */
+    import java.util.Scanner;
 
 public class MorraGame {
+    
+        //declaring variables
 	Scanner sc = new Scanner(System.in);
 	private int playerTeam; //0 for even, 1 for odd
 	private int playerScore = 0, compScore = 0; //total points
 	private int roundWin = 0;
 	private int playerBonus = 0, compBonus = 0; //bonus points
-	private int[] playerMoves = new int[6];
+	private int[] playerMoves = new int[6];//no more than 6 moves logically required to reach the target number
 	private int[] compMoves = new int[6];
 	private String winner = "";
 	private int moveCount = 0;
 
+        
+        //Core method, calls the chose Team method and define the 3 main structural options of the game, win, draw, loose
 	public MorraGame() {
 		chooseTeam();
 		int count = 1;
@@ -20,37 +34,37 @@ public class MorraGame {
 			count++;
 		}
 		if(playerScore > compScore) {
-			this.winner = "You won the game!";
+			this.winner = "You are the winner of the game :) !!!";
 		} else if (playerScore == compScore) {
-			this.winner = "It's a draw!";
+			this.winner = "Nobody win, is a draw!";
 		} else {
-			this.winner = "The computer won the game!";
+			this.winner = "The computer has won this game :( !";
 		}
 		System.out.println(this.gameEnd());
 	}
-
+	
 	//stores the player's chosen team, and confirms it to the player
 	public void chooseTeam() {
-		int team = 2;
+		int team = 0;
 		boolean iError = true; //input error
 		while(iError) {
-			System.out.println("Please choose your team. (0 for evens, 1 for odds)");
-			if(sc.hasNextInt()) {
-				team = sc.nextInt();
-				if(team == 0 || team == 1 ) {
-					iError = false;
-				} else {
-					System.out.println("Invalid number");
-				}
-			} else {
-				System.out.println("That's not a number");
-				sc.reset();
-				sc.next();
-			}
+                    System.out.println("Please choose your team. Type:  (1 for odds, 2 for evens)");;
+                    if(sc.hasNextInt()) {
+                            team = sc.nextInt();
+                            if(team == 1 || team == 2 ) {
+                                    iError = false;
+                            } else {
+                                    System.out.println("Invalid number, please try again");
+                            }
+                    } else {
+                            System.out.println("That's not a number");
+                            sc.reset();
+                            sc.next();
+                    }
 		}
 		setPlayerTeam(team);
 		String chosenTeam = "";
-		if (team == 0) {
+		if (team == 2) {
 			chosenTeam += "evens";
 		} else {
 			chosenTeam += "odds";
@@ -58,33 +72,34 @@ public class MorraGame {
 		System.out.println("You have chosen to play as " + chosenTeam + "!");
 	}
 
-	//plays a round
+	//plays a round in the game
+       //Take player's move, take computer's move, and evaluate the round
 	public void playRound() {
-    int playerMove = 11;
-    boolean iError = true;
-    do {
-        System.out.println("Please enter your move (1 - 10)");
-        if (sc.hasNextInt()) {
-            playerMove = sc.nextInt();
-            if (playerMove > 0 && playerMove < 11) {
-                iError = false;
-            } else {
-                System.out.println("Invalid number");
-            }
-        } else {
-            System.out.println("That's not a number");
-            sc.reset();
-            sc.next();
-        }
-    } while (iError);
-    System.out.println("You chose: " + playerMove);
-    int compMove = (int) (Math.random() * 10 + 1);
-    System.out.println("Computer chose: " + compMove);
-    this.playerMoves[this.moveCount] = playerMove;
-    this.compMoves[this.moveCount] = compMove;
-    moveCount++;
-    calcScore(playerMove, compMove);
-}
+		int playerMove = 11;
+		boolean iError = true;
+		while(iError) {
+                    System.out.println("Please enter your move (1 - 10)");
+                    if(sc.hasNextInt()) {
+                            playerMove = sc.nextInt();
+                            if(playerMove > 0 && playerMove < 11) {
+                                    iError = false;
+                            } else {
+                                    System.out.println("Invalid number");
+                            }
+                    } else {
+                            System.out.println("That's not a number");
+                            sc.reset();
+                            sc.next();
+                    }
+		}
+                    System.out.println("You chose: " + playerMove);
+		int compMove = (int)(Math.random() * 10 + 1);
+                    System.out.println("Computer chose: " + compMove);
+		this.playerMoves[this.moveCount] = playerMove;
+		this.compMoves[this.moveCount] = compMove;
+                    moveCount++;
+                    calcScore(playerMove, compMove);
+	}
 
 	//calculates and updates the total points, bonus points, rounds won, etc
 	public void calcScore(int playerMove, int compMove) {
@@ -108,6 +123,7 @@ public class MorraGame {
 			System.out.println("The computer won bonus points!");
 			this.compBonus += 2;
 		} //no else. nothing happens if they are an equal distance apart
+                 //Get the number of round wins a player needs to meet or exceed to win the match
 
 		//print scores
 		System.out.println("Your score is now: " + playerScore);
@@ -125,17 +141,15 @@ public class MorraGame {
 			return team;
 	}
 
-	//when game ends, displays the winner and move history
+	//when game ends, displays the winner and move it to the history
 	public String gameEnd() {
-    	String moveSummary = "\n\n" + this.winner;
-    	moveSummary += "\nMoves";
-    	moveSummary += "\nPlayer - Computer";
-    	int count = 0;
-    		while(count < this.moveCount){
-        moveSummary += "\n  " + playerMoves[count] + "    -    " + compMoves[count];
-        count++;
-    	}
-    return moveSummary;
+			String moveSummary = "\n\n" + this.winner;
+			moveSummary += "\nMoves";
+			moveSummary += "\nPlayer - Computer";
+			for(int count = 0; count < this.moveCount; count++) {
+				moveSummary += "\n  " + playerMoves[count] + "    -    " + compMoves[count];
+			}
+			return moveSummary;
 	}
 
 	//rounds won and lost
@@ -150,10 +164,10 @@ public class MorraGame {
 
 		String gameString = this.winner;
 		gameString += "\nRounds Won: " + this.roundWin;
-		gameString += "\nRounds Lost: " + (this.moveCount - this.roundWin);
+		gameString += "\nRounds Lost: " + (this.moveCount - this.roundWin);  //operating though move Count and Round Wins
 		String grammar1 = "", grammar2 = "";
-		if (playerEvenCount == 1) {
-			grammar1 = "number";
+		if (playerEvenCount == 1) {             //special "if" for the use of correct grammar
+			grammar1 = "number";    
 		} else {
 			grammar1 = "numbers";
 		}
@@ -173,8 +187,11 @@ public class MorraGame {
 		} else {
 			grammar2 = "numbers";
 		}
+                
+                //Take the results from the above defined arrays and print them with the extra correct grammar method
 		gameString += "\nThe computer chose " + compEvenCount + " even " + grammar1 + ", and " + (this.moveCount - compEvenCount) + " odd " + grammar2 + ".";
 		gameString += "\nYou received " + this.playerBonus + " bonus points, and the computer received " + this.compBonus + " bonus points.";
 		return gameString;
 	}
 }
+
