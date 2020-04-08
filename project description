@@ -1,0 +1,68 @@
+Design/Implementation
+
+Three classes – It was ultimately decided that this project would be divided into 3 classes; MorraApp, MorraGameManager, MorraGame.
+MorraGame – Controls all functionality for a single game of Morra and stores all relevant information (teams, moves, round wins, game winner, etc).
+MorraGameManager – Controls the functionality for interacting with the user about playing a game/games, storing the games played, and printing out the game summary of each played when the user has indicated they’re done playing.
+MorraApp – Contains the main method, which simply runs an instance of MorraGameManager, and could easily be rewritten to run a single MorraGame instance if someone wants to just play one game.
+
+MorraGameManager:
+As ArrayLists could not be used, an array of size 10 was chosen to store games. If the user exceeds this, they are asked if they would like to continue playing. If they do, an array with space for 10 more games is created, the previous games are copied to it, and the original array is overwritten by the new one.
+
+MorraGame:
+Player and CPU moves were stored in an array of size 6, because there is no possible scenario where more than 6 moves can be played in a single game. A game requires a minimum of 3 moves, and a maximum of 6 for one of the players to reach or exceed 12 points.
+
+The toString method was used in the MorraGame class to print the summary of a game in a string, allowing the MorraGameManager class to print each class to show the summary when the user is finished playing, rather than relying on printing a method for each class.
+
+Grammar fixes were used in the toString method of MorraGame to prevent grammar mistakes such as “1 even numbers” instead of “1 even number”.
+
+MorraGame/MorraGameManager:
+Line breaks and formatting (eg. “=== GAME 1 ===”) were added to improve console readability in certain sections.
+
+
+
+
+
+Game detailed description
+
+MorraApp.java
+public class MorraApp {}---Contains the main method, that does not return any value as it has the void parameter  and this one calls the collection new MoraGameManager();???? which has more constructors that control the game development. 
+		MorraGameManager.java
+ Class public class MorraGameManager {}--- this method as described in its name,  deals with the games management. Contains the scanner method that takes the input from the user by creating a new object of type Scanner and the saving the input in a variable respecting the type of the variable, will present different code with the method next() or nextInt(), etc. Declares the int counter variable that counts the number of games, and the variable of type String play == ” ”; that controls the game flow like continue game, etc. This last two in game variables have a private modifier because they are going to be accessible only inside the method. Also contains all the constructors that operate the game and the variables.
+After declaring the variables, The Mora Game [] games array is called with an assigned space of [10].
+public MorraGameManager() {} Constructor declared that takes the inputs from the user and assigns them to an option selection in the game mask, or game menu. This Menu contains 3 options: 1: “Show game description”; 2:”Play” ; 3”Exit” ;
+It uses a two variables, one boolen active= true; and an int option: with default value = 0 and an error handler variable type Boolean iError = true; by default
+Thanks to two while loops checks the active Boolean and the Boolean iError relating them to the Input in an If selection statement. And a switch loop
+The loop combination with the selection statement with switch cases loop works as follows: Each option in the menu is a switch case, that is compared with the user input. If the input is out of the input conditions stated in the if selection statement, The jError will be lunched with different messages, one for numbers out of range, one for characters used instead of numbers. If this errors are presented, the loop will still be active by the Boolean active setted to true.
+In the case that one of the options for the menu is correctly selected with an user input. The case that this user corresponds to will be executed running the corresponding method to it assigned and breaking the loop and running the related method. Only in the switch case number 3 the switch case will run into changing the Boolean active to false, breaking the loops and exiting the program.
+public void showWelcome() {} Method that prints a small header with a welcome message; Executed automatically when lunching the java program.
+public void printGameDesc() {} This method is lunched when in the Main menu the option 1 will be selected: and is displays a bunch of prints statements that contain a small description of the game
+public void runMainLoop() {} The method with return type void, or no return value expected . Runs a loop type while the String play is different to “n” that contains a message to the user asking him if he want to play a /another game? Depending if it´s the first game or if he had played before. And relates this question to an if selection statement inside the while loop that takes the user input if this is among the listed, and if not printing an error message. If the answer is yes then we proceed in executing the PLayGame() {} method. And if not the Game Summary will be printed if this summary exists.
+public void playGame() {} This method is connected directly to the MorraGame [] array that initially has 10 empty spaces, each one is going to be related to a Morra Game played and stored in the array. The loop contains two if selections statements, being a control loop. This control is lunched when the limit of the array is exceeded and the User has finished the tenth game in the array. Then a question will be printed asking the User if he feels ok after playing for a long while the same game. If the user wants to continue, then a New array will be added to the original one MorraGame[] games2 = new MorraGame[this.games.length + 10]; and the game will continue for another 10 games and the process will be repeated again.
+public void printGamesSummary(){} This method prints the results saved in the array MorraGame game = new MorraGame(); with help of the variable gameCount that iterated and through the game and saved game into the array.
+
+MorraGame.java
+public class MorraGame ---{} this method as its name says represent the main functionality of the app.
+At the beginning of the method we declare The scanner method that takes the input from the user by creating a new object of type Scanner and the saving the input in a variable respecting the type of the variable, will present different code with the method next().
+Also this variables that will be all of them used along the different code methods, and will be only accessible inside the respective methods.
+private int playerTeam; //0 for even, 1 for odd //private int playerScore = 0, compScore = 0; // private int roundWin = 0;//private int playerBonus = 0, compBonus = 0; // private int[] playerMoves = new int[6]; (no more than 6 moves logically required to reach the target number)// private int[] compMoves = new int[6]; // private String winner = ""; // private int moveCount = 0;
+
+public MorraGame() {} this constructor represents the main core of the game, and with this I mean the main rules of the game. There is a while loop that runs while the score(playerScore or compScore ) of each player (player & computer) is not higher than 12, calls the PlayRound() constructor and increments the count variable. After doing that if the score reached 12, compares the computer score and the player score with the help of an if selection statement and depending on the result will display who is the winner or if is a draw. And then ends the game.
+public void chooseTeam() {} In this constructor of type void(no value return needed) ,the player will chose the team in which he will play “odds” or “evens”. With the help of a variable team initialized with 0 of type int.  and an error variable of type Boolean starting with the value of true.   Here is used a while loop that checks this Boolean as parameter and decides the user input with a selection statement. Deciding whether the input was an odd number (1) or an even number (0). If this conditions is fulfilled the team variable will be assigned to the playerTeam and prints the corresponding team to the user. And if not The error Boolean will be lunched printing error messages. The sc.reset() resets the values inserted in the sc variable that intakes the values from the user with the help of the Scanner function.
+public void playRound() {} In this constructor of type void(no value return needed) , is where all the fun takes place, or all the interaction between users occurs. Here the int playerMove= 11 is declared with this value as is not allowed to show this number in the round and is physically impossible. Also there is a while loop with an error Boolean variable set by default to true, as only if the correct values are introduced by the user this boolean error sentinel will be changed to false allowing the user value to be  saved into the Playermove variable.  At the same time to increase the moveCount counter variable. If the wrong values are presented, then again the error will be displayed, different error depending on the type of incorrect input. The compMove variable will be assigned a random value by using the int compMove = (int)(Math.random() * 10 + 1); the Math.Random function that gives a random value as the value that the computer displays in each round, and of course this random value is limited by the same constrains that the player has in the if selection statements. At the end the calcScore ()constructor is called.
+public void calcScore(int playerMove, int compMove) {} This constructor makes the mathematical part of the game calculating the moves of each player following the rules specified in different constrains along if/else if selection along the code, that is why is dealing this this two parameters playerMove, compMove in the constructor declaration. Here we decided to calculate the points in two different ways as per required criteria, one for round points, and one for bonus points. For both players we used if / else if selection statements. For the player we compare the playerteam value and the total sum variables and we apply to both of them the modulo %2. If the result is equal that means the player is the one who reached the first one 12 points and won the round and we add him +3 points and add the count to the roundWin++ variable. If the case is the contrary then the computer is the one who won and the point would be assigned to him comScore += 3. 
+To calculate the bonus points we have compared the difference of the sum variable (of the numbers for each team) and the player/compMove)  to use this comparation we have used the Math.abs function 	if(Math.abs(sum - compMove) > Math.abs(sum - playerMove)) , and depending on which player has a bigger number that means that its number was the closest to the 12 which is the limit of points to win the game. 
+Then both bonus points and Scores are displayed for both players respectively. 
+
+public void setPlayerTeam(int team) {}
+Sets the player team values without any return as is a void, as usual in the setter methods
+
+public int getPlayerTeam() {}
+Gets the value from the player team and assigns it to the team variable.
+
+public String gameEnd() {} In this method we have moved all the variables  to a variable String moveSumary that goes through the playerMoves array and summarize the data that was obtained though playing the game and saving the values in it obtained. At In this method we return this MoveSumary values.
+
+public String toString() {}This is a method created to atomatize the grammatically correct display of the dialogues along the game and to prevent possible failures and error in the display of important information towards the user. Goes though the game count with the help of an int variable in order to find out if we are dealing with one number or many numbers. Uses if/else selection statement in with the parameter playerEvenCount and moveCount, saving them in a string variable grammar1/2.
+
+At the end of the method the gameString String variable that stored the points or bonus points will be displayed for each one of the players
+
+		
