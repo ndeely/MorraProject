@@ -3,11 +3,11 @@
  *
  * @author Niall Deely, Tudor George Pascu, Alexandre Zurcher
  * PBL for Software development, Morra Game
- email Niall: x19216025@student.ncirl.ie
- email Tudor: x19209690@student.ncirl.ie
- email Alex: x19224338@student.ncirl.ie
+ * email Niall: x19216025@student.ncirl.ie
+ * email Tudor: x19209690@student.ncirl.ie
+ * email Alex: x19224338@student.ncirl.ie
  * 
- */
+ **/
 import java.util.Scanner;
 
 public class MorraGame {
@@ -24,7 +24,7 @@ public class MorraGame {
 	private int moveCount = 0;
 
         
-        //Core method, calls the chose Team method and define the 3 main structural options of the game, win, draw, loose
+        //Constructor: calls the chooseTeam method, displays the winner and calls the gameEnd method when a player exceeds 11 points
 	public MorraGame() {
 		chooseTeam();
 		int count = 1;
@@ -36,7 +36,7 @@ public class MorraGame {
 		if(playerScore > compScore) {
 			this.winner = "You are the winner of the game :) !!!";
 		} else if (playerScore == compScore) {
-			this.winner = "Nobody win, is a draw!";
+			this.winner = "Nobody wins, it's a draw!";
 		} else {
 			this.winner = "The computer has won this game :( !";
 		}
@@ -48,7 +48,7 @@ public class MorraGame {
 		int team = 0;
 		boolean iError = true; //input error
 		while(iError) {
-                    System.out.println("Please choose your team. Type:  (1 for odds, 2 for evens)");
+                    System.out.println("Please choose your team. (1 for odds, 2 for evens)");
                     if(sc.hasNextInt()) {
                             team = sc.nextInt();
                             if(team == 1 || team == 2 ) {
@@ -140,7 +140,7 @@ public class MorraGame {
 		return team;
 	}
 
-	//when game ends, displays the winner and move it to the history
+	//when game ends, displays the winner and move history
 	public String gameEnd() {
 		String moveSummary = "\n\n" + this.winner;
 		moveSummary += "\nMoves";
